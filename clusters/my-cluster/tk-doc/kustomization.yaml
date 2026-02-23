@@ -1,0 +1,13 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: tk-doc
+  namespace: flux-system
+spec:
+  interval: 5m
+  targetNamespace: default
+  path: "./k8s"
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: tk-doc
