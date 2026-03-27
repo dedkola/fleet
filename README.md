@@ -170,10 +170,4 @@ flux install --export \
   > clusters/my-cluster/flux-system/gotk-components.yaml
 ```
 
-## Notes
 
-- `tk-doc` uses a dedicated secret (`tk-doc`) for private repo auth
-- `tk-doc-dev` deploys from the `dev` branch to the `dev` namespace with host `dev.doc.tk.com`
-- Flux reconciles every 1m (sources) / 5–10m (kustomizations)
-- Image scanning runs every 1m
-- `identity`, `identity.pub`, `known_hosts`, and `terraform.tfstate` are gitignored — never commit these
