@@ -52,20 +52,20 @@ flux get image update -A
 Flux automatically updates container images when new tags are pushed to GHCR. This requires:
 
 1. **Image automation controllers** — installed via `gotk-components.yaml` (components-extra: `image-reflector-controller`, `image-automation-controller`)
-2. **SHA-based image tags** — CI must tag images as `sha-<git-sha>` (not just `:latest`)
+2. **Timestamp-based image tags** — CI must tag images as `YYYYMMDDHHmmss-<short-sha>` (not just `:latest`)
 3. **Image policy markers** — Deployment manifests in app repos need a marker comment
 
 ### How it works
 
-1. CI builds and pushes image with tag `sha-<commit-sha>` to GHCR
+1. CI builds and pushes image with tag `YYYYMMDDHHmmss-<short-sha>` (e.g. `20260327124823-dc0f3eb`) to GHCR
 2. `ImageRepository` scans the registry every 1m for new tags
-3. `ImagePolicy` selects the newest tag matching `^sha-[a-f0-9]+`
+3. `ImagePolicy` selects the newest tag matching `^\d{14}-[a-f0-9]+$` (alphabetical sort = chronological)
 4. `ImageUpdateAutomation` commits the updated image tag to the app repo
 5. Flux detects the new commit and rolls out the updated deployment
 
 ### CI setup (GitHub Actions)
 
-Each app repo needs a workflow that tags images with SHA. Add this to `.github/workflows/docker-build.yml`:
+Each app repo needs a workflow that tags images with timestamps. Add this to `.github/workflows/docker-build.yml`:
 
 ```yaml
 - name: Extract metadata
@@ -74,7 +74,7 @@ Each app repo needs a workflow that tags images with SHA. Add this to `.github/w
   with:
     images: ghcr.io/dedkola/<app-name>
     tags: |
-      type=sha,prefix=sha-
+      type=raw,value={{date 'YYYYMMDDHHmmss'}}-{{sha}}
       type=raw,value=latest
 
 - name: Build and push
@@ -97,7 +97,7 @@ image: ghcr.io/dedkola/chat2md:latest # {"$imagepolicy": "flux-system:chat2md"}
 image: ghcr.io/dedkola/tk-doc:latest # {"$imagepolicy": "flux-system:tk-doc"}
 ```
 
-Flux will replace the tag portion automatically when a new SHA tag is detected.
+Flux will replace the tag portion automatically when a new timestamp tag is detected.
 
 ## Secrets
 
@@ -146,7 +146,7 @@ The `flux-system` and `tk-doc` secrets need **write access** to their respective
 4. Create `clusters/my-cluster/<app>/kustomization.yaml` (lists the above files)
 5. If private repo: create Git secret — `flux create secret git <app> --url=... --username=git --password=<token>`
 6. If private registry: create registry secret for image scanning (see Secrets section)
-7. Update app CI to push SHA-based tags
+7. Update app CI to push timestamp-based tags (`type=raw,value={{date 'YYYYMMDDHHmmss'}}-{{sha}}`)
 8. Add `# {"$imagepolicy": "flux-system:<app>"}` marker to the app's deployment manifest
 
 ## Re-bootstrap Flux (with image automation)
