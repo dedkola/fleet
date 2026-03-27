@@ -1,0 +1,8 @@
+identity
+identity.pub
+known_hosts
+terraform.tfstate
+terraform.tfstate.backup
+.terraform/
+.idea/
+.vscode/

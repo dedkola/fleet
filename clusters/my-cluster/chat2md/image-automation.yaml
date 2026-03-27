@@ -1,0 +1,48 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: chat2md
+  namespace: flux-system
+spec:
+  image: ghcr.io/dedkola/chat2md
+  interval: 1m0s
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: chat2md
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: chat2md
+  filterTags:
+    pattern: "^sha-[a-f0-9]+"
+  policy:
+    alphabetical:
+      order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageUpdateAutomation
+metadata:
+  name: chat2md
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  sourceRef:
+    kind: GitRepository
+    name: chat2md
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: fluxcdbot@users.noreply.github.com
+        name: fluxcdbot
+      messageTemplate: "chore: update chat2md image to {{range .Changed.Changes}}{{print .NewValue}}{{end}}"
+    push:
+      branch: main
+  update:
+    path: ./k8s
+    strategy: Setters

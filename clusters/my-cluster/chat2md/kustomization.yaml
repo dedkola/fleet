@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - gitrepository.yaml
   - flux-kustomization.yaml
+  - image-automation.yaml

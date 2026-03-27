@@ -1,0 +1,50 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: tk-doc
+  namespace: flux-system
+spec:
+  image: ghcr.io/dedkola/tk-doc
+  interval: 1m0s
+  secretRef:
+    name: ghcr-tk-doc
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: tk-doc
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: tk-doc
+  filterTags:
+    pattern: "^sha-[a-f0-9]+"
+  policy:
+    alphabetical:
+      order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageUpdateAutomation
+metadata:
+  name: tk-doc
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  sourceRef:
+    kind: GitRepository
+    name: tk-doc
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: fluxcdbot@users.noreply.github.com
+        name: fluxcdbot
+      messageTemplate: "chore: update tk-doc image to {{range .Changed.Changes}}{{print .NewValue}}{{end}}"
+    push:
+      branch: main
+  update:
+    path: ./k8s
+    strategy: Setters
