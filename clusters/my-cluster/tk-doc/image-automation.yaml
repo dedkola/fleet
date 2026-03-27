@@ -19,7 +19,7 @@ spec:
   imageRepositoryRef:
     name: tk-doc
   filterTags:
-    pattern: "^sha-[a-f0-9]+"
+    pattern: "^\\d{14}-[a-f0-9]+$"
   policy:
     alphabetical:
       order: asc
