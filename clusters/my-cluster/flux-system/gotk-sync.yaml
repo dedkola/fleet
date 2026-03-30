@@ -10,8 +10,8 @@ spec:
   ref:
     branch: main
   secretRef:
-    name: fleet-secret
-  url: https://github.com/dedkola/fleet
+    name: flux-system
+  url: https://github.com/dedkola/fleet.git
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
