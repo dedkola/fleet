@@ -42,7 +42,7 @@ spec:
       author:
         email: fluxcdbot@users.noreply.github.com
         name: fluxcdbot
-      messageTemplate: "chore: update tk-doc image to {{range .Changed.Changes}}{{print .NewValue}}{{end}}"
+      messageTemplate: "chore: update tk-doc image to {{range .Changed.Changes}}{{print .NewValue}}{{end}} [ci skip]"
     push:
       branch: main
   update:
