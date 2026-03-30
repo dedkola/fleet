@@ -5,8 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 5m
-  targetNamespace: dev
-  createNamespace: true
+  targetNamespace: default
   path: "./k8s"
   prune: true
   sourceRef:

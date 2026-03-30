@@ -8,5 +8,5 @@ spec:
   ref:
     branch: main
   secretRef:
-    name: tk-doc
+    name: fleet-secret
   url: https://github.com/dedkola/tk-doc.git

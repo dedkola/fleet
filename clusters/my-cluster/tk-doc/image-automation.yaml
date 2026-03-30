@@ -8,7 +8,7 @@ spec:
   image: ghcr.io/dedkola/tk-doc
   interval: 1m0s
   secretRef:
-    name: ghcr-tk-doc
+    name: fleet-ghcr
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy

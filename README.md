@@ -56,6 +56,17 @@ flux bootstrap github \
   --components-extra=image-reflector-controller,image-automation-controller
 ```
 
+```
+flux bootstrap github \
+  --owner=dedkola \
+  --repository=fleet \
+  --path=clusters/my-cluster \
+  --branch=main \
+  --personal \
+  --private \
+  --token-auth
+```
+
 This will:
 
 1. Install Flux controllers (including image automation) into the `flux-system` namespace
