@@ -135,27 +135,19 @@ Both are listed in `.gitignore` — **never commit private keys**.
 
 ### Step 3 — Update the Kubernetes secret
 
-```bash
-kubectl delete secret flux-system -n flux-system
+# Git auth (HTTPS) — one PAT for all repos
 
-kubectl create secret generic flux-system \
+```
+kubectl create secret generic fleet-secret \
   --namespace=flux-system \
-  --from-file=identity=./identity \
-  --from-file=identity.pub=./identity.pub \
-  --from-file=known_hosts=<(ssh-keyscan github.com 2>/dev/null)
+  --from-literal=username=dedkola \
+  --from-literal=password=pat
+
+  kubectl create secret generic flux-system \
+  --namespace=flux-system \
+  --from-literal=username=dedkola  \
+  --from-literal=password=pat
 ```
-
-### Step 4 — Reconcile and verify
-
-```bash
-flux reconcile source git flux-system
-flux reconcile kustomization flux-system
-flux get sources git -A
-```
-
-The `flux-system` GitRepository should show a new revision and `Ready: True`.
-
----
 
 ## Part 3 — Add a new app to the fleet
 
