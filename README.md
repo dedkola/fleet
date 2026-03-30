@@ -56,17 +56,6 @@ flux bootstrap github \
   --components-extra=image-reflector-controller,image-automation-controller
 ```
 
-```
-flux bootstrap github \
-  --owner=dedkola \
-  --repository=fleet \
-  --path=clusters/my-cluster \
-  --branch=main \
-  --personal \
-  --private \
-  --token-auth
-```
-
 This will:
 
 1. Install Flux controllers (including image automation) into the `flux-system` namespace
@@ -405,3 +394,10 @@ flux install --export \
   --components-extra=image-reflector-controller,image-automation-controller \
   > clusters/my-cluster/flux-system/gotk-components.yaml
 ```
+
+Futher Reading and Resources about Flux:
+
+- [Flux documentation](https://fluxcd.io/docs/)
+- [GitOps with Flux](https://www.youtube.com/watch?v=ZlQY
+- [Flux onboarding guide](https://doc.tkweb.site/docs/Kubernetes/flux-onboarding)
+- [Flux to Node.js app guide](https://doc.tkweb.site/docs/Kubernetes/flux-to-node-app)
