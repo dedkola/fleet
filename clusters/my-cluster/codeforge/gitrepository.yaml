@@ -9,4 +9,4 @@ spec:
     branch: main
   secretRef:
     name: fleet-secret
-  url: https://github.com/dedkola/codeForge.git
+  url: https://github.com/dedkola/codeforge.git
