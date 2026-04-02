@@ -25,6 +25,31 @@ spec:
       order: asc
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: codeforge-cs-proxy
+  namespace: flux-system
+spec:
+  image: ghcr.io/dedkola/codeforge/cs-proxy
+  interval: 1m0s
+  secretRef:
+    name: fleet-ghcr
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: codeforge-cs-proxy
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: codeforge-cs-proxy
+  filterTags:
+    pattern: "^\\d{14}-[a-f0-9]+$"
+  policy:
+    alphabetical:
+      order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageUpdateAutomation
 metadata:
   name: codeforge

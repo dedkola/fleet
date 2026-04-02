@@ -5,9 +5,9 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  path: ./k8s
+  path: ./k8s/overlays/prod
   prune: true
-  targetNamespace: default
+  targetNamespace: codelearn
   sourceRef:
     kind: GitRepository
     name: codeforge
