@@ -122,20 +122,46 @@ Both are listed in `.gitignore` — **never commit private keys**.
 5. Check **Allow write access** (required for image automation to push commits)
 6. Save
 
-### Step 3 — Update the Kubernetes secret
+### Step 3 — Update the Kubernetes secret Updated
 
 # Git auth (HTTPS) — one PAT for all repos
 
-```
+# Git auth (HTTPS) — one PAT for all repos
+
+```bash
 kubectl create secret generic fleet-secret \
   --namespace=flux-system \
   --from-literal=username=dedkola \
   --from-literal=password=pat
 
-  kubectl create secret generic flux-system \
+kubectl create secret docker-registry fleet-ghcr \
   --namespace=flux-system \
-  --from-literal=username=dedkola  \
-  --from-literal=password=pat
+  --docker-server=ghcr.io \
+  --docker-username=dedkola \
+  --docker-password=pat
+
+
+kubectl create secret docker-registry ghcr-secret \
+  --docker-server=ghcr.io \
+  --docker-username=dedkola \
+  --docker-password=pat \
+  --docker-email=maiden.tech \
+  -n flux-system
+
+
+kubectl create secret docker-registry ghcr-secret \
+  --docker-server=ghcr.io \
+  --docker-username=dedkola \
+  --docker-password=pat \
+  --docker-email=maiden.tech \
+  -n default
+
+  kubectl create secret docker-registry ghcr-secret \
+  --docker-server=ghcr.io \
+  --docker-username=dedkola \
+  --docker-password=pat \
+  --docker-email=maiden.tech \
+  -n codelearn
 ```
 
 ## Part 3 — Add a new app to the fleet
