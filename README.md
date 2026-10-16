@@ -424,8 +424,8 @@ flux install --export \
 Futher Reading and Resources about Flux:
 
 - [Flux documentation](https://fluxcd.io/docs/)
-- [Flux onboarding guide](https://doc.tkweb.site/docs/Kubernetes/flux-onboarding)
-- [Flux to Node.js app guide](https://doc.tkweb.site/docs/Kubernetes/flux-to-node-app)
+- [Flux onboarding guide](https://doc.tkweb.dev/docs/Kubernetes/flux-onboarding)
+- [Flux to Node.js app guide](https://doc.tkweb.dev/docs/Kubernetes/flux-to-node-app)
 
 # bootstrap fix
 
